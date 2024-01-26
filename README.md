@@ -19,11 +19,17 @@ SO THAT my company can compete with other e-commerce companies
 
 Clone this GitHub repo to their local computer.
 
-Open the .env.EXAMPLE file.  Enter the correct database name, MySQL username, and MySQL password, then remove the ".EXAMPLE" from the file name.
+Open the .env.EXAMPLE file.  Enter the correct database name (should already be listed), MySQL username, and MySQL password, then remove the ".EXAMPLE" from the file name.
 
-Connect to a database using Sequelize:
+Create the database in MySQL Workbench from the terminal:
 - mysql -u root -p
-- source schema.sql
+- source ./db/schema.sql
+
+Install all dependencies in VS Code
+- npm install
+
+Insert the seeds into the database using the terminal:
+- node /seeds
 
 ## Usage
 
