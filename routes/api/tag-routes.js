@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
 // update a tag's name by its `id` value //NEED TO TEST
 router.put('/:id', async (req, res) => {
-  ProductTag.update(
+  Tag.update(
     {
       tag_name: req.body.tag_name,
     },
