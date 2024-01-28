@@ -5,60 +5,55 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // find all tags
 router.get('/', (req, res) => {
-  // be sure to include its associated Product data
   Tag.findAll().then((productData) => {
     res.json(productData);
   });
+  // be sure to include its associated Product data //NEED TO MAKE THIS WORK
 });
 
-// Finds a single tag by its `id` //NEED TO TEST
+// Finds a single tag by its `id` 
 router.get('/:id', async (req, res) => {
-  // be sure to include its associated Product data
-  try {
-    const productData = await ProductTag.findByPk(req.params.tag_id);
-    if (!productData) {
-      res.status(404).json({ message: 'No tag with this id!' });
-      return;
-    }
-    res.status(200).json(productData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  // find a single tag by its `id`
+  Tag.findByPk(req.params.id).then((tagData) => {
+    res.json(tagData);
+  });
+  // be sure to include its associated Product data //NEED TO MAKE THIS WORK
 });
 
-// create a new tag //NEED TO TEST
+// create a new tag
 router.post('/', async (req, res) => {
-  try {
-    const tagData = await Tag.create(req.body);
-    res.status(200).json(tagData);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+  Tag.create(req.body)
+  .then((newTag) => {
+    res.json(newTag);
+  })
+  .catch((err) => {
+    res.json(err);
+  });
 });
 
-// update a tag's name by its `id` value //NEED TO TEST
+// update a tag's name by its `id` value
 router.put('/:id', async (req, res) => {
   Tag.update(
     {
       tag_name: req.body.tag_name,
     },
     {
-      // Gets the product tag based on the id given in the request parameters
+      // Gets the tag based on the id given in the request parameters
       where: {
         id: req.params.id,
       },
     }
   )
     .then((updatedTag) => {
-      // Sends the updated product tag as a json response
+      // Sends the updated tag as a json response
       res.json(updatedTag);
     })
     .catch((err) => res.json(err));
 });
 
-// delete on tag by its `id` value //NEED TO TEST
+// delete on tag by its `id` value
 router.delete('/:id', (req, res) => {
-  ProductTag.destroy({
+  Tag.destroy({
     where: {
       id: req.params.id,
     },
