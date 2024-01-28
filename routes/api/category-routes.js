@@ -4,11 +4,26 @@ const { Category, Product } = require('../../models');
 // The `/api/categories` endpoint
 
 // find all categories
-router.get('/', (req, res) => {
-  Category.findAll().then((categoryData) => {
-    res.json(categoryData);
-  });
+router.get('/', async (req, res) => {
+  // Category.findAll().then((categoryData) => {
+  //   res.json(categoryData);
+  // });
   // be sure to include its associated Products //NEED TO MAKE THIS WORK
+  try {
+    const categoryData = await Category.findAll(req.params.id, {
+      // JOIN with products
+      include: [{ model: Product, as: 'products' }]
+    });
+
+    if (!categoryData) {
+      res.status(404).json({ message: 'No category found with this id!' });
+      return;
+    }
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // find one category by its `id` value
