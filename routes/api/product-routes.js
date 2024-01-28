@@ -5,11 +5,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', async (req, res) => {
-  // find all products
-  // Product.findAll().then((productData) => {
-  //   res.json(productData);
-  // });
-  // be sure to include its associated Category and Tag data //NEED TO MAKE THIS WORK
+  // Includes its associated Category and Tag data //NEED TAG INFORMATION TO SHOW AS WELL
   try {
     const productData = await Product.findAll({
       // JOIN with category and tag
@@ -28,12 +24,23 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  Product.findByPk(req.params.id).then((productData) => {
-    res.json(productData);
-  });
-  // be sure to include its associated Category and Tag data //NEED TO MAKE THIS WORK
+router.get('/:id', async (req, res) => {
+  // Includes its associated Category and Tag data //NEED TO MAKE THIS WORK WITH TAGS - CATEGORIES IS WORKING
+  try {
+    const productData = await Product.findByPk((req.params.id), {
+      // JOIN with category and tag
+      include: [{ model: Category, Tag, ProductTag}]
+    });
+
+    if (!productData) {
+      res.status(404).json({ message: 'No product found with this id!' });
+      return;
+    }
+
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // create new product

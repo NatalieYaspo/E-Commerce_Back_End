@@ -5,14 +5,31 @@ const { Category, Product } = require('../../models');
 
 // find all categories
 router.get('/', async (req, res) => {
-  // Category.findAll().then((categoryData) => {
-  //   res.json(categoryData);
-  // });
-  // be sure to include its associated Products //NEED TO MAKE THIS WORK
+  // Includes its associated Products
   try {
-    const categoryData = await Category.findAll(req.params.id, {
+    const categoryData = await Category.findAll({
       // JOIN with products
-      include: [{ model: Product, as: 'products' }]
+      include: [{ model: Product}]
+    });
+
+    if (!categoryData) {
+      res.status(404).json({ message: 'No categories found!' });
+      return;
+    }
+
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// find one category by its `id` value
+router.get('/:id', async (req, res) => {
+  //Includes its associated Products
+  try {
+    const categoryData = await Category.findByPk(req.params.id, {
+      // JOIN with products
+      include: [{ model: Product}]
     });
 
     if (!categoryData) {
@@ -24,14 +41,6 @@ router.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});
-
-// find one category by its `id` value
-router.get('/:id', (req, res) => {
-  Category.findByPk(req.params.id).then((categoryData) => {
-    res.json(categoryData);
-  });
-  // be sure to include its associated Products //NEED TO MAKE THIS WORK
 });
 
 // create a new category
