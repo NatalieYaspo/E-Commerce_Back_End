@@ -5,11 +5,11 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', async (req, res) => {
-  // Includes its associated Category and Tag data //NEED TAG INFORMATION TO SHOW AS WELL
+  // Includes its associated Category and Tag data
   try {
     const productData = await Product.findAll({
       // JOIN with category and tag
-      include: [{ model: Category, Tag, ProductTag}]
+      include: [{ model: Category}, {model: Tag, through: ProductTag}]
     });
 
     if (!productData) {
@@ -25,11 +25,11 @@ router.get('/', async (req, res) => {
 
 // get one product
 router.get('/:id', async (req, res) => {
-  // Includes its associated Category and Tag data //NEED TO MAKE THIS WORK WITH TAGS - CATEGORIES IS WORKING
+  // Includes its associated Category and Tag data
   try {
     const productData = await Product.findByPk((req.params.id), {
       // JOIN with category and tag
-      include: [{ model: Category, Tag, ProductTag}]
+      include: [{ model: Category}, {model: Tag, through: ProductTag}],
     });
 
     if (!productData) {
