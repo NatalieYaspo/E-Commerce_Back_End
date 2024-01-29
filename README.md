@@ -29,7 +29,7 @@ Install all dependencies in VS Code
 - npm install
 
 Insert the seeds into the database using the terminal:
-- node /seeds
+- npm run seed
 
 ## Usage
 
@@ -43,13 +43,9 @@ When the user tests API POST, PUT, and DELETE routes in Insomnia, they are able 
 
 ## Credits
 
+Starter Code: https://git.bootcampcontent.com/UNC-Charlotte/UNCC-VIRT-FSF-FT-12-2023-U-LOLC 
+
 Developer: Natalie Yaspo
-
-Collaborators:
-- 
-
-Tutorials:
-- 
 
 ## License
 
