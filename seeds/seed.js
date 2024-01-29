@@ -14,13 +14,25 @@ const tagSeedData = require('./tag-seeds.json');
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  const categories = await Category.bulkCreate(categorySeedData);
+  const categories = await Category.bulkCreate(categorySeedData, {
+    individualHooks: true,
+    returning: true,
+  });
 
-  const products = await Product.bulkCreate(productSeedData);
+  const products = await Product.bulkCreate(productSeedData, {
+    individualHooks: true,
+    returning: true,
+  });
 
-  const productTags = await ProductTag.bulkCreate(productTagSeedData);
+  const productTags = await ProductTag.bulkCreate(productTagSeedData, {
+    individualHooks: true,
+    returning: true,
+  });
 
-  const tags = await Tag.bulkCreate(tagSeedData);
+  const tags = await Tag.bulkCreate(tagSeedData, {
+    individualHooks: true,
+    returning: true,
+  });
 
   
 
