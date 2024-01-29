@@ -33,7 +33,7 @@ Insert the seeds into the database using the terminal:
 
 ## Usage
 
-Video Tutorial:
+Video Tutorial: https://drive.google.com/file/d/1Te3fN8tm8GCMPOlaaUUAl8Z7GdqHGVhQ/view
 
 User will use the Command Link to invoke the application (node server.js) and the server will be started and the Sequelize models are synced to the MySQL database.
 
